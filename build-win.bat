@@ -16,13 +16,20 @@ set COMPILE=%GBDK%\lcc -c -I%INCLUDE% -o
 :: Make directories
 if not exist "%BUILD%" mkdir "%BUILD%"
 if not exist "%INTERMEDIATE%" mkdir "%INTERMEDIATE%"
+if not exist "%INTERMEDIATE%\rom" mkdir "%INTERMEDIATE%\rom"
 
 :: Compile source
 %COMPILE% %INTERMEDIATE%\main.o %SOURCE%\main.c
+%COMPILE% %INTERMEDIATE%\render.o %SOURCE%\render.c
+%COMPILE% %INTERMEDIATE%\color.o %SOURCE%\color.c
+%COMPILE% %INTERMEDIATE%\rom\color.o %SOURCE%\rom\color.c
 
 :: Link objects
-%GBDK%\lcc -o %BUILD%\jmon.gb ^
-              %INTERMEDIATE%\main.o
+%GBDK%\lcc -msm83:gb -Wm-yo128 -Wm-yt0x10 -Wm-yC -Wm-yn"Jokemon" -o %BUILD%\jmon.gb ^
+%INTERMEDIATE%\main.o                                                               ^
+%INTERMEDIATE%\render.o                                                             ^
+%INTERMEDIATE%\color.o                                                              ^
+%INTERMEDIATE%\rom\color.o
 
 :: Log success
 echo Build successful! See "%BUILD%\jmon.gb".

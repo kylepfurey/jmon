@@ -2,11 +2,10 @@
 // Jokémon Game Library
 // by Kyle Furey
 
-#ifndef JMON_H
-#define JMON_H
-
+#pragma once
+#include <jmon/export.h>
 #include <jmon/extern.h>
 #include <jmon/types.h>
+#include <jmon/render.h>
+#include <jmon/color.h>
 #include <jmon/rom/rom.h>
-
-#endif

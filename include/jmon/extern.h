@@ -2,13 +2,10 @@
 // Jokémon External Libraries
 // by Kyle Furey
 
-#ifndef JMON_EXTERN_H
-#define JMON_EXTERN_H
-
+#pragma once
 #include <stdio.h>
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <gb/gb.h>
-
-#endif
+#include <gb/cgb.h>

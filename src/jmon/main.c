@@ -4,10 +4,13 @@
 
 #include <jmon/jmon.h>
 
+#pragma bank BANK_STATIC
+
 /** Game loop. */
-void main(void) {
+void main(void) NONBANKED {
+	jmon_init();
 	printf("Welcome to Jokemon!\n");
 	while (true) {
-		wait_vbl_done();
+		jmon_next_frame();
 	}
 }

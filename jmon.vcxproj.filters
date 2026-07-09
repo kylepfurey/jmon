@@ -13,36 +13,51 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\include">
-      <UniqueIdentifier>{88b567f3-55f2-4f12-98bf-b7a6a8e94046}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\src">
-      <UniqueIdentifier>{06c7e369-abed-4976-b82e-9af0bf0808f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\include\rom">
-      <UniqueIdentifier>{4eed0971-57d4-4af2-a392-d1c6a3ff258c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\src\rom">
+    <Filter Include="Source Files\rom">
       <UniqueIdentifier>{47f90d9b-66b7-4fda-af94-ab604b36f65b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\rom">
+      <UniqueIdentifier>{4eed0971-57d4-4af2-a392-d1c6a3ff258c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\jmon\jmon.h">
-      <Filter>Header Files\include</Filter>
+    <ClInclude Include="include\jmon\rom\rom.h">
+      <Filter>Header Files\rom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\jmon\rom\color.h">
+      <Filter>Header Files\rom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\jmon\color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\jmon\export.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\jmon\extern.h">
-      <Filter>Header Files\include</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\jmon\jmon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\jmon\render.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\jmon\types.h">
-      <Filter>Header Files\include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\jmon\rom\rom.h">
-      <Filter>Header Files\include\rom</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\jmon\rom\color.c">
+      <Filter>Source Files\rom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\jmon\color.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\jmon\main.c">
-      <Filter>Source Files\src</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\jmon\render.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
