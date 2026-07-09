@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="jmon.vcxproj" Id="57a7b64e-71fb-4585-8907-054c0b871e30" />
+</Solution>
