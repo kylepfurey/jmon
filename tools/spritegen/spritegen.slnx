@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="spritegen.vcxproj" Id="59f84014-6d23-40dc-b67a-a1ff13f09469" />
+</Solution>
