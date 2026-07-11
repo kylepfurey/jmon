@@ -5,8 +5,9 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <unordered_set>
-#include <map>
+#include <sstream>
+#include <vector>
+#include <set>
 #include <filesystem>
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -14,152 +15,210 @@
 
 using namespace std;
 
-/** Outputs the inputted sprite data as a C array. */
-int main(int argc, const char* argv[]) {
+class pixel {
+public:
 
-	// Log title
-	cout << "GameBoy Sprite Data Generator\n" << endl;
+	uint8_t a = 0;
+	bool transparent = true;
+	uint8_t r = 0;
+	uint8_t g = 0;
+	uint8_t b = 0;
+	uint32_t rgba8888 = 0;
+	uint16_t bgr555 = 0;
+	uint8_t luminance = 0;
+	int32_t order = 0;
 
-	// Iterate each argument
-	for (int i = 0; i < argc; ++i) {
-
-		// Load the image
-		const char* path = argv[i];
-		int width;
-		int height;
-		int channels;
-		unsigned char* image = stbi_load(path, &width, &height, &channels, 4);
-		if (image == nullptr) {
-
-			// Not an image
-			continue;
+	pixel(stbi_uc* image) {
+		a = image[3];
+		if (a != 0) {
+			transparent = false;
+			r = image[0];
+			g = image[1];
+			b = image[2];
+			rgba8888 = (static_cast<uint32_t>(a) << 24) | (static_cast<uint32_t>(b) << 16) | (static_cast<uint32_t>(g) << 8) | static_cast<uint32_t>(r);
+			bgr555 = (b >> 3 << 10) | (g >> 3 << 5) | r >> 3;
+			luminance = static_cast<uint8_t>(0.299 * r + 0.587 * g + 0.114 * b);
+			order = UINT8_MAX - luminance;
 		}
-		cout << '\"' << path << '\"' << endl;
-
-		// Validate the image size
-		if (width < 8 || height < 8) {
-
-			// Invalid size
-			cout << "Error: Image is not at least 8 x 8!" << endl;
-			stbi_image_free(image);
-			cout << endl;
-			continue;
+		else {
+			order = -1;
 		}
-
-		// Iterate each pixel
-		unordered_set<int> colors;
-		map<int, int> index_to_color;
-		for (int y = 0; y < height; ++y) {
-			for (int x = 0; x < width; ++x) {
-
-				// Get color hex
-				unsigned char* pixel = image + (y * width + x) * 4;
-				int color = pixel[0] | (pixel[1] << 8) | (pixel[2] << 16) | (pixel[3] << 24);
-
-				// Get index with color luminance
-				unsigned char r = pixel[0];
-				unsigned char g = pixel[1];
-				unsigned char b = pixel[2];
-				unsigned char a = pixel[3];
-				int index = a != 0 ? (int)(255 - ((77 * r + 150 * g + 29 * b) >> 8)) : -1;
-
-				// Track each color and luminance
-				colors.insert(color);
-				index_to_color[index] = color;
-			}
-		}
-
-		// Validate colors
-		if (colors.size() > 4) {
-
-			// Too many colors
-			cout << "Error: Too many colors!" << endl;
-			stbi_image_free(image);
-			cout << endl;
-			continue;
-		}
-		if (index_to_color.size() < colors.size()) {
-
-			// Bad palette
-			cout << "Error: Bad palette! 2+ colors are identical in monochrome!" << endl;
-			stbi_image_free(image);
-			cout << endl;
-			continue;
-		}
-
-		// Store the sprite data
-		unsigned char indices[8][8]{};
-		for (int y = 0; y < 8; ++y) {
-			for (int x = 0; x < 8; ++x) {
-
-				// Get index with color luminance
-				unsigned char* pixel = image + (y * width + x) * 4;
-				unsigned char r = pixel[0];
-				unsigned char g = pixel[1];
-				unsigned char b = pixel[2];
-				unsigned char a = pixel[3];
-				int index = a != 0 ? (int)(255 - ((77 * r + 150 * g + 29 * b) >> 8)) : -1;
-
-				// Store each color by its palette index
-				indices[y][x] = (unsigned char)distance(index_to_color.begin(), index_to_color.find(index));
-			}
-		}
-
-		// Process the sprite data
-		short palette[4]{};
-		int index = 0;
-		for (const auto& [luminance, color] : index_to_color) {
-			unsigned char r = (color >> 0) & 0xFF;
-			unsigned char g = (color >> 8) & 0xFF;
-			unsigned char b = (color >> 16) & 0xFF;
-			short gb = ((r >> 3) << 0) | ((g >> 3) << 5) | ((b >> 3) << 10);
-			palette[index++] = gb;
-		}
-		unsigned char sprite[16]{};
-		for (int y = 0; y < 8; ++y) {
-			unsigned char low = 0;
-			unsigned char high = 0;
-			for (int x = 0; x < 8; ++x) {
-				unsigned char index = indices[y][x];
-				low |= (unsigned char)((index & 1) << (7 - x));
-				high |= (unsigned char)(((index >> 1) & 1) << (7 - x));
-			}
-			sprite[y * 2] = low;
-			sprite[y * 2 + 1] = high;
-		}
-
-		// Output the sprite data
-		string name = filesystem::path(path).stem().string();
-		cout << "const tile_t rom_tile_" << name << " = {\n\t";
-		for (int i = 0; i < 16; ++i) {
-			cout << "0x" << hex << uppercase << setw(2) << setfill('0') << (int)sprite[i] << dec;
-			if (i % 4 == 3) {
-				cout << ",\n";
-				if (i != 15) {
-					cout << "\t";
-				}
-			}
-			else {
-				cout << ", ";
-			}
-		}
-		cout << "};\nconst palette_t rom_palette_" << name << " = {\n\t";
-		for (int i = 0; i < 4; ++i) {
-			cout << "0x" << hex << uppercase << setw(4) << setfill('0') << (int)palette[i] << dec << ", ";
-			if (i == 3) {
-				cout << '\n';
-			}
-		}
-		cout << "};" << endl;
-
-		// Cleanup
-		stbi_image_free(image);
-		cout << endl;
 	}
 
-	// Await input
+	struct sort {
+		bool operator()(const pixel& a, const pixel& b) const {
+			if (a.bgr555 != b.bgr555 && a.luminance == b.luminance) {
+				throw runtime_error("Bad palette! 2+ colors are identical in monochrome!");
+			}
+			return a.order < b.order;
+		}
+	};
+};
+
+class tile {
+public:
+	int raw_width = 0;
+	int raw_height = 0;
+	int raw_channels = 0;
+	stbi_uc* image = nullptr;
+	string path{};
+	string name{};
+	int width = 0;
+	int height = 0;
+	int channels = 0;
+	size_t size = 0;
+	vector<pixel> pixels{};
+	set<pixel, pixel::sort> colors{};
+	uint16_t palette[4]{};
+	int grid_x = 0;
+	int grid_y = 0;
+	size_t sprite_size = 0;
+	vector<uint8_t> sprite{};
+
+	int palette_index(const pixel& pixel) const {
+		int i = 0;
+		for (const auto& color : colors) {
+			if (pixel.bgr555 == color.bgr555 && pixel.transparent == color.transparent) {
+				return i;
+			}
+			++i;
+		}
+		return 0;
+	}
+
+	tile(const char* path) {
+		cout << '\"' << path << '\"' << endl;
+		image = stbi_load(path, &raw_width, &raw_height, &raw_channels, 4);
+		if (image == nullptr) {
+			throw runtime_error("Not an image!");
+		}
+		if (raw_width < 8 || raw_height < 8) {
+			stbi_image_free(image);
+			throw runtime_error("Image is not at least 8 x 8 pixels!");
+		}
+		this->path = path;
+		name = filesystem::path(path).stem().string();
+		width = raw_width & ~7;
+		height = raw_height & ~7;
+		channels = 4;
+		size = width * height;
+		pixels.reserve(size);
+		for (int y = 0; y < height; ++y) {
+			for (int x = 0; x < width; ++x) {
+				size_t offset = (static_cast<size_t>(y) * raw_width + x) * 4;
+				pixel pixel(image + offset);
+				pixels.push_back(pixel);
+				try {
+					colors.insert(pixel);
+				}
+				catch (const runtime_error& error) {
+					stbi_image_free(image);
+					throw;
+				}
+				if (colors.size() > 4) {
+					stbi_image_free(image);
+					throw runtime_error("Too many colors! Limit is 4 (including transparency).");
+				}
+			}
+		}
+		int i = 0;
+		for (const pixel& pixel : colors) {
+			palette[i++] = pixel.bgr555;
+		}
+		grid_x = width / 8;
+		grid_y = height / 8;
+		sprite_size = size / 4;
+		sprite.reserve(sprite_size);
+		for (int tile_y = 0; tile_y < grid_y; ++tile_y) {
+			for (int tile_x = 0; tile_x < grid_x; ++tile_x) {
+				for (int y = 0; y < 8; ++y) {
+					uint8_t low = 0;
+					uint8_t high = 0;
+					for (int x = 0; x < 8; ++x) {
+						int pixel_x = tile_x * 8 + x;
+						int pixel_y = tile_y * 8 + y;
+						uint8_t index = palette_index(pixels[pixel_y * width + pixel_x]);
+						low |= ((index & 1)) << (7 - x);
+						high |= ((index & 2) >> 1) << (7 - x);
+					}
+					sprite.push_back(low);
+					sprite.push_back(high);
+				}
+			}
+		}
+	}
+
+	~tile() {
+		stbi_image_free(image);
+		image = nullptr;
+	}
+
+	string format_palette() {
+		stringstream result;
+		result << "const palette_t rom_" << name << "_palette = {\n\t";
+		for (int i = 0; i < 4; ++i) {
+			result << "0x" << hex << uppercase << setw(4) << setfill('0') << static_cast<int>(palette[i]) << ", ";
+		}
+		result << "\n};";
+		return result.str();
+	}
+
+	string format_sprite() const {
+		stringstream result;
+		result << "const sprite_t rom_" << name << "_sprite = {\n";
+		int rows = height / 2;
+		for (int r = 0; r < rows; ++r) {
+			int y_a = (r * 2) % 8;
+			int y_b = (r * 2 + 1) % 8;
+			int tile_y_a = (r * 2) / 8;
+			int tile_y_b = (r * 2 + 1) / 8;
+			result << "\t";
+			for (int tile_x = 0; tile_x < grid_x; ++tile_x) {
+				size_t idx_a = ((static_cast<size_t>(tile_y_a) * grid_x + tile_x) * 8 + y_a) * 2;
+				size_t idx_b = ((static_cast<size_t>(tile_y_b) * grid_x + tile_x) * 8 + y_b) * 2;
+				uint8_t bytes[4] = { sprite[idx_a], sprite[idx_a + 1], sprite[idx_b], sprite[idx_b + 1] };
+				for (uint8_t byte : bytes) {
+					result << "0x" << hex << uppercase << setw(2) << setfill('0') << static_cast<int>(byte) << ", ";
+				}
+			}
+			result << "\n";
+		}
+		result << "};";
+		return result.str();
+	}
+
+	string format_metasprite() const {
+		stringstream result;
+		result << "const metasprite_t rom_" << name << "_metasprite[] = {\n";
+		for (int tile_y = 0; tile_y < grid_y; ++tile_y) {
+			for (int tile_x = 0; tile_x < grid_x; ++tile_x) {
+				int dtile = tile_y * grid_x + tile_x;
+				result << "\tMETASPR_ITEM(" << (tile_y * 8) << ", " << (tile_x * 8) << ", " << dtile << ", 0),\n";
+			}
+		}
+		result << "\tMETASPR_TERM,\n";
+		result << "};";
+		return result.str();
+	}
+};
+
+int main(int argc, const char* argv[]) {
+	cout << "GameBoy Sprite Data Generator\n" << endl;
+	for (int i = 1; i < argc; ++i) {
+		try {
+			tile tile(argv[i]);
+			cout << tile.format_palette() << endl;
+			cout << tile.format_sprite() << endl;
+			if (tile.grid_x > 1 || tile.grid_y > 1) {
+				cout << tile.format_metasprite() << endl;
+			}
+		}
+		catch (const runtime_error& error) {
+			cout << "Error: " << error.what() << endl;
+		}
+		cout << endl;
+	}
 	cout << "Press enter to exit." << endl;
 	cin.get();
-
 	return 0;
 }

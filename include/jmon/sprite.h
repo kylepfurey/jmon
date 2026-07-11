@@ -5,11 +5,11 @@
 #pragma once
 #include <jmon/types.h>
 
+/** Returns the number of sprite tiles in a sprite. */
+#define SPRITE_TILES(rom_sprite) (sizeof((rom_sprite)) / 16)
+
 /** One or more 8 x 8 sprite tiles. */
-typedef byte_t tile_t[];
+typedef byte_t sprite_t[];
 
-/** A collection of sprite tiles that create a single metasprite. */
-typedef metasprite_t sprite_t[];
-
-/** A collection of metasprites that can be animated in order. */
-typedef sprite_t *animation_t[];
+/** A null-terminated array of metasprite pointers that can be animated in order. */
+typedef const metasprite_t* animation_t[];
