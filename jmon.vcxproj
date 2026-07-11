@@ -23,8 +23,13 @@
     <ClCompile Include="src\jmon\main.c" />
     <ClCompile Include="src\jmon\render.c" />
     <ClCompile Include="src\jmon\rom\color.c" />
+    <ClCompile Include="src\jmon\rom\sprite.c" />
+    <ClCompile Include="src\jmon\rom\string.c" />
+    <ClCompile Include="src\jmon\sprite.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\jmon\rom\string.h" />
+    <ClInclude Include="include\jmon\sprite.h" />
     <ClInclude Include="include\jmon\color.h" />
     <ClInclude Include="include\jmon\export.h" />
     <ClInclude Include="include\jmon\extern.h" />
@@ -32,6 +37,7 @@
     <ClInclude Include="include\jmon\render.h" />
     <ClInclude Include="include\jmon\rom\color.h" />
     <ClInclude Include="include\jmon\rom\rom.h" />
+    <ClInclude Include="include\jmon\rom\sprite.h" />
     <ClInclude Include="include\jmon\types.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

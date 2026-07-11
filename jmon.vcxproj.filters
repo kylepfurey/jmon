@@ -45,6 +45,15 @@
     <ClInclude Include="include\jmon\types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\jmon\rom\sprite.h">
+      <Filter>Header Files\rom</Filter>
+    </ClInclude>
+    <ClInclude Include="include\jmon\sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\jmon\rom\string.h">
+      <Filter>Header Files\rom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\jmon\rom\color.c">
@@ -58,6 +67,15 @@
     </ClCompile>
     <ClCompile Include="src\jmon\render.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\jmon\rom\sprite.c">
+      <Filter>Source Files\rom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\jmon\sprite.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\jmon\rom\string.c">
+      <Filter>Source Files\rom</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

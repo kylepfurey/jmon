@@ -9,3 +9,4 @@
 #include <stdint.h>
 #include <gb/gb.h>
 #include <gb/cgb.h>
+#include <gb/metasprites.h>

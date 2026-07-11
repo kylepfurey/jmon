@@ -3,4 +3,4 @@
 // by Kyle Furey
 
 #pragma once
-#include <jmon/types.h>
+#include <jmon/color.h>

@@ -4,8 +4,6 @@
 
 #include <jmon/jmon.h>
 
-#pragma bank BANK_STATIC
-
 /** Initializes rendering. */
 void jmon_init(void) NONBANKED {
 	DISPLAY_OFF;

@@ -7,5 +7,6 @@
 #include <jmon/extern.h>
 #include <jmon/types.h>
 #include <jmon/render.h>
+#include <jmon/sprite.h>
 #include <jmon/color.h>
 #include <jmon/rom/rom.h>

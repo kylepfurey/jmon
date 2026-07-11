@@ -130,7 +130,7 @@ int main(int argc, const char* argv[]) {
 
 		// Output the sprite data
 		string name = filesystem::path(path).stem().string();
-		cout << "const sprite_t rom_sprite_" << name << " = {\n\t";
+		cout << "const tile_t rom_tile_" << name << " = {\n\t";
 		for (int i = 0; i < 16; ++i) {
 			cout << "0x" << hex << uppercase << setw(2) << setfill('0') << (int)sprite[i] << dec;
 			if (i % 4 == 3) {
