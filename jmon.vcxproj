@@ -25,10 +25,12 @@
     <ClCompile Include="src\jmon\rom\color.c" />
     <ClCompile Include="src\jmon\rom\sprite.c" />
     <ClCompile Include="src\jmon\rom\string.c" />
+    <ClCompile Include="src\jmon\save.c" />
     <ClCompile Include="src\jmon\sprite.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\jmon\rom\string.h" />
+    <ClInclude Include="include\jmon\save.h" />
     <ClInclude Include="include\jmon\sprite.h" />
     <ClInclude Include="include\jmon\color.h" />
     <ClInclude Include="include\jmon\export.h" />
