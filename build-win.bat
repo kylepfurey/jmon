@@ -29,14 +29,14 @@ if not exist "%INTERMEDIATE%\rom" mkdir "%INTERMEDIATE%\rom"
 %COMPILE% %INTERMEDIATE%\rom\color.o %SOURCE%\rom\color.c
 
 :: Link objects
-%GBDK%\lcc -msm83:gb -Wm-yo128 -Wm-yt0x10 -Wm-yC -Wm-yn"Jokemon" -o %BUILD%\jmon.gb ^
-%INTERMEDIATE%\main.o                                                               ^
-%INTERMEDIATE%\render.o                                                             ^
-%INTERMEDIATE%\sprite.o                                                             ^
-%INTERMEDIATE%\color.o                                                              ^
-%INTERMEDIATE%\save.o                                                               ^
-%INTERMEDIATE%\rom\string.o                                                         ^
-%INTERMEDIATE%\rom\sprite.o                                                         ^
+%GBDK%\lcc -msm83:gb -Wm-yo128 -Wm-ya4 -Wm-yt0x10 -Wm-yC -Wm-yn"Jokemon" -o %BUILD%\jmon.gb ^
+%INTERMEDIATE%\main.o                                                                       ^
+%INTERMEDIATE%\render.o                                                                     ^
+%INTERMEDIATE%\sprite.o                                                                     ^
+%INTERMEDIATE%\color.o                                                                      ^
+%INTERMEDIATE%\save.o                                                                       ^
+%INTERMEDIATE%\rom\string.o                                                                 ^
+%INTERMEDIATE%\rom\sprite.o                                                                 ^
 %INTERMEDIATE%\rom\color.o
 
 :: Log success
