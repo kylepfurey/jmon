@@ -23,6 +23,7 @@ if not exist "%INTERMEDIATE%\rom" mkdir "%INTERMEDIATE%\rom"
 %COMPILE% %INTERMEDIATE%\render.o %SOURCE%\render.c
 %COMPILE% %INTERMEDIATE%\sprite.o %SOURCE%\sprite.c
 %COMPILE% %INTERMEDIATE%\color.o %SOURCE%\color.c
+%COMPILE% %INTERMEDIATE%\input.o %SOURCE%\input.c
 %COMPILE% %INTERMEDIATE%\save.o %SOURCE%\save.c
 %COMPILE% %INTERMEDIATE%\rom\string.o %SOURCE%\rom\string.c
 %COMPILE% %INTERMEDIATE%\rom\sprite.o %SOURCE%\rom\sprite.c
@@ -34,6 +35,7 @@ if not exist "%INTERMEDIATE%\rom" mkdir "%INTERMEDIATE%\rom"
 %INTERMEDIATE%\render.o                                                                     ^
 %INTERMEDIATE%\sprite.o                                                                     ^
 %INTERMEDIATE%\color.o                                                                      ^
+%INTERMEDIATE%\input.o                                                                      ^
 %INTERMEDIATE%\save.o                                                                       ^
 %INTERMEDIATE%\rom\string.o                                                                 ^
 %INTERMEDIATE%\rom\sprite.o                                                                 ^

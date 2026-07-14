@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\jmon\color.c" />
+    <ClCompile Include="src\jmon\input.c" />
     <ClCompile Include="src\jmon\main.c" />
     <ClCompile Include="src\jmon\render.c" />
     <ClCompile Include="src\jmon\rom\color.c" />
@@ -29,6 +30,7 @@
     <ClCompile Include="src\jmon\sprite.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\jmon\input.h" />
     <ClInclude Include="include\jmon\rom\string.h" />
     <ClInclude Include="include\jmon\save.h" />
     <ClInclude Include="include\jmon\sprite.h" />

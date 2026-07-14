@@ -57,6 +57,9 @@
     <ClInclude Include="include\jmon\save.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\jmon\input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\jmon\rom\color.c">
@@ -81,6 +84,9 @@
       <Filter>Source Files\rom</Filter>
     </ClCompile>
     <ClCompile Include="src\jmon\save.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\jmon\input.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

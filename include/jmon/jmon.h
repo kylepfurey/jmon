@@ -9,5 +9,6 @@
 #include <jmon/render.h>
 #include <jmon/sprite.h>
 #include <jmon/color.h>
+#include <jmon/input.h>
 #include <jmon/save.h>
 #include <jmon/rom/rom.h>

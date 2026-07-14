@@ -10,6 +10,8 @@
 /** A magic number used to check valid save data. */
 #define JMON_MAGIC 0xBAD
 
+#pragma bank 0
+
 /**
  * Returns a pointer to the save data in the SRAM bank at <slot>.
  * Must be followed by a jmon_save() call.

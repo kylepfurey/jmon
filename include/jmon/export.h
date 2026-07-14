@@ -8,4 +8,4 @@
 #define JMON_FUNC extern inline
 
 /** Jokémon data specifiers. */
-#define JMON_ROM extern const
+#define JMON_DATA extern const
