@@ -13,8 +13,5 @@ void main(void) NONBANKED {
 	while (true) {
 		jmon_next_frame();
 		jmon_update_input(&input);
-		if (jmon_is_input_pressed(&input, IA_ANY)) {
-			printf("%s\n", jmon_input_to_string(input.current));
-		}
 	}
 }
