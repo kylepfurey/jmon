@@ -19,8 +19,7 @@ typedef struct {
 	/** A magic number used to check valid save data. */
 	ushort_t magic;
 
-	/** For testing. */
-	byte_t counter;
+	// ...
 } save_t;
 
 /**
