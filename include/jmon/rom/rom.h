@@ -6,3 +6,4 @@
 #include <jmon/rom/string.h>
 #include <jmon/rom/sprite.h>
 #include <jmon/rom/color.h>
+#include <jmon/rom/audio.h>

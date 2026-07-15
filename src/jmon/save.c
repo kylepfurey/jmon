@@ -5,7 +5,7 @@
 #include <jmon/jmon.h>
 
 /** A pointer to Jokémon save data. */
-#define JMON_SAVE ((volatile save_t*)0xA000)
+#define JMON_SAVE ((volatile save_t*)_SRAM)
 
 /** A magic number used to check valid save data. */
 #define JMON_MAGIC 0xBAD

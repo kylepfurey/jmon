@@ -60,6 +60,12 @@
     <ClInclude Include="include\jmon\input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\jmon\audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\jmon\rom\audio.h">
+      <Filter>Header Files\rom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\jmon\rom\color.c">
@@ -87,6 +93,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\jmon\input.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\jmon\rom\audio.c">
+      <Filter>Source Files\rom</Filter>
+    </ClCompile>
+    <ClCompile Include="src\jmon\audio.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

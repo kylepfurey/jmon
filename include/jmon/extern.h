@@ -12,3 +12,4 @@
 #include <gb/gb.h>
 #include <gb/cgb.h>
 #include <gb/metasprites.h>
+#include <gb/hardware.h>

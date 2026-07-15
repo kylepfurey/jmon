@@ -9,7 +9,7 @@
 #define SPRITE_TILES(rom_sprite) (sizeof((rom_sprite)) / 16)
 
 /** One or more 8 x 8 sprite tiles. */
-typedef byte_t sprite_t[];
+typedef const byte_t sprite_t[];
 
 /** A null-terminated array of metasprite pointers that can be animated in order. */
-typedef const metasprite_t* animation_t[];
+typedef const metasprite_t* const animation_t[];
