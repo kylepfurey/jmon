@@ -15,14 +15,6 @@ void jmon_update_input(input_t* input) NONBANKED {
 	input->current = input->disabled ? 0 : joypad();
 }
 
-/** Returns whether input is currently enabled. */
-bool_t jmon_is_input_enabled(const input_t* input) NONBANKED {
-	if (input == NULL) {
-		return false;
-	}
-	return !input->disabled;
-}
-
 /** Enables input for Jokémon. */
 void jmon_enable_input(input_t* input) NONBANKED {
 	if (input == NULL) {
@@ -37,6 +29,14 @@ void jmon_disable_input(input_t* input) NONBANKED {
 		return;
 	}
 	input->disabled = true;
+}
+
+/** Returns whether input is currently enabled. */
+bool_t jmon_is_input_enabled(const input_t* input) NONBANKED {
+	if (input == NULL) {
+		return false;
+	}
+	return !input->disabled;
 }
 
 /** Returns whether input actions were pressed this frame. */

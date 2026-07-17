@@ -14,8 +14,8 @@ void main(void) NONBANKED {
 	input_t input = { {0} };
 	audio_t audio = { {0} };
 	while (true) {
-		jmon_next_frame();
 		jmon_update_input(&input);
 		jmon_update_audio(&audio);
+		jmon_next_frame();
 	}
 }

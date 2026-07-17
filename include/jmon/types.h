@@ -6,6 +6,9 @@
 #include <jmon/export.h>
 #include <jmon/extern.h>
 
+/** TODO */
+#define TODO 0
+
 /** Jokémon boolean type. */
 typedef bool bool_t;
 

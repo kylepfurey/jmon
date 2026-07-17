@@ -33,14 +33,14 @@ typedef struct {
 /** Refreshes the current user input. */
 JMON_FUNC void jmon_update_input(input_t* input) NONBANKED;
 
-/** Returns whether input is currently enabled. */
-JMON_FUNC bool_t jmon_is_input_enabled(const input_t* input) NONBANKED;
-
 /** Enables input for Jokémon. */
 JMON_FUNC void jmon_enable_input(input_t* input) NONBANKED;
 
 /** Disables input for Jokémon. */
 JMON_FUNC void jmon_disable_input(input_t* input) NONBANKED;
+
+/** Returns whether input is currently enabled. */
+JMON_FUNC bool_t jmon_is_input_enabled(const input_t* input) NONBANKED;
 
 /** Returns whether input actions were pressed this frame. */
 JMON_FUNC bool_t jmon_is_input_pressed(const input_t* input, input_actions_t actions) NONBANKED;
