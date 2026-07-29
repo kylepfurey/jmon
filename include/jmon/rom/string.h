@@ -9,28 +9,28 @@
 BANKREF_EXTERN(input_strings)
 
 /** String for no input. */
-JMON_DATA string_t rom_string_input_none;
+JMON_DATA char_t rom_string_input_none[];
 
 /** String for up input. */
-JMON_DATA string_t rom_string_input_up;
+JMON_DATA char_t rom_string_input_up[];
 
 /** String for right input. */
-JMON_DATA string_t rom_string_input_right;
+JMON_DATA char_t rom_string_input_right[];
 
 /** String for down input. */
-JMON_DATA string_t rom_string_input_down;
+JMON_DATA char_t rom_string_input_down[];
 
 /** String for left input. */
-JMON_DATA string_t rom_string_input_left;
+JMON_DATA char_t rom_string_input_left[];
 
 /** String for B input. */
-JMON_DATA string_t rom_string_input_b;
+JMON_DATA char_t rom_string_input_b[];
 
 /** String for A input. */
-JMON_DATA string_t rom_string_input_a;
+JMON_DATA char_t rom_string_input_a[];
 
 /** String for select input. */
-JMON_DATA string_t rom_string_input_select;
+JMON_DATA char_t rom_string_input_select[];
 
 /** String for start input. */
-JMON_DATA string_t rom_string_input_start;
+JMON_DATA char_t rom_string_input_start[];

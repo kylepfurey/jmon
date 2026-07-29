@@ -17,8 +17,11 @@
  * Must be followed by a jmon_save() call.
  */
 volatile save_t* jmon_load(save_slot_t slot) NONBANKED {
+	if (slot >= SAVE_COUNT) {
+		return NULL;
+	}
 	ENABLE_RAM;
-	SWITCH_RAM(slot % SAVE_SLOT_COUNT);
+	SWITCH_RAM(slot);
 	if (JMON_SAVE->magic != JMON_MAGIC) {
 		memset(JMON_SAVE, 0, sizeof(save_t));
 	}
@@ -38,8 +41,11 @@ void jmon_save(void) NONBANKED {
  * This should never be called between jmon_load() and jmon_save().
  */
 bool_t jmon_has_save(save_slot_t slot) NONBANKED {
+	if (slot >= SAVE_COUNT) {
+		return false;
+	}
 	ENABLE_RAM;
-	SWITCH_RAM(slot % SAVE_SLOT_COUNT);
+	SWITCH_RAM(slot);
 	bool_t result = JMON_SAVE->magic == JMON_MAGIC;
 	SWITCH_RAM(0);
 	DISABLE_RAM;
@@ -51,8 +57,11 @@ bool_t jmon_has_save(save_slot_t slot) NONBANKED {
  * This should never be called between jmon_load() and jmon_save().
  */
 void jmon_delete_save(save_slot_t slot) NONBANKED {
+	if (slot >= SAVE_COUNT) {
+		return;
+	}
 	ENABLE_RAM;
-	SWITCH_RAM(slot % SAVE_SLOT_COUNT);
+	SWITCH_RAM(slot);
 	memset(JMON_SAVE, 0, sizeof(save_t));
 	SWITCH_RAM(0);
 	DISABLE_RAM;

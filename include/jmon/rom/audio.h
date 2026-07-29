@@ -15,4 +15,4 @@ JMON_DATA ushort_t rom_notes_pulse[NT_COUNT];
 JMON_DATA ushort_t rom_notes_wave[NT_COUNT];
 
 /** Precomputed note values for the noise audio channel. */
-JMON_DATA ushort_t rom_notes_noise[NT_COUNT];
+JMON_DATA ushort_t rom_notes_noise[NS_COUNT];

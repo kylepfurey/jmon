@@ -65,18 +65,16 @@ def format_c_array(entries, per_line=12):
     return "\n".join(lines)
 
 def main():
-    octaves = list(range(2, 9))  # 7 octave blocks: NT_2_.. through NT_8_..
-
     scale = pick_scale(n=12, min_freq=120, max_freq=6000, width_mode=0)
     nr43_values = [nr43 for _freq, nr43 in scale]
 
-    labels = [f"NT_{octave}_{name}" for octave in octaves for name in NOTE_NAMES]
-    full_values = nr43_values * len(octaves)  # repeat the 12-step scale per octave
+    labels = [f"NS_{name}" for name in NOTE_NAMES]
+    full_values = nr43_values
 
     entries = list(zip(labels, full_values))
 
     print("/** Precomputed note values for the noise audio channel. */")
-    print("const ushort_t rom_notes_noise[NT_COUNT] = {")
+    print("const ushort_t rom_notes_noise[NS_COUNT] = {")
     print(format_c_array(entries))
     print("};\n")
 

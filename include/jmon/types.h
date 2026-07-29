@@ -31,4 +31,4 @@ typedef fixed fixed_t;
 typedef char char_t;
 
 /** Jokémon string type. */
-typedef const char_t* string_t;
+typedef const char_t *string_t;

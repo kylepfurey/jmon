@@ -7,11 +7,11 @@
 
 /** Each valid saving slot index and the total number of slots. */
 typedef enum {
-	SAVE_SLOT_ONE = 0,
-	SAVE_SLOT_TWO = 1,
-	SAVE_SLOT_THREE = 2,
-	SAVE_SLOT_FOUR = 3,
-	SAVE_SLOT_COUNT,
+	SAVE_ONE = 0,
+	SAVE_TWO = 1,
+	SAVE_THREE = 2,
+	SAVE_FOUR = 3,
+	SAVE_COUNT,
 } save_slot_t;
 
 /** Jokémon save data. */

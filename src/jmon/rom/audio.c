@@ -32,12 +32,6 @@ const ushort_t rom_notes_wave[NT_COUNT] = {
 };
 
 /** Precomputed note values for the noise audio channel. */
-const ushort_t rom_notes_noise[NT_COUNT] = {
-    [NT_2_C]=84,[NT_2_CS]=70,[NT_2_D]=68,[NT_2_DS]=54,[NT_2_E]=52,[NT_2_F]=38,[NT_2_FS]=36,[NT_2_G]=22,[NT_2_GS]=20,[NT_2_A]=6,[NT_2_AS]=4,[NT_2_B]=3,
-    [NT_3_C]=84,[NT_3_CS]=70,[NT_3_D]=68,[NT_3_DS]=54,[NT_3_E]=52,[NT_3_F]=38,[NT_3_FS]=36,[NT_3_G]=22,[NT_3_GS]=20,[NT_3_A]=6,[NT_3_AS]=4,[NT_3_B]=3,
-    [NT_4_C]=84,[NT_4_CS]=70,[NT_4_D]=68,[NT_4_DS]=54,[NT_4_E]=52,[NT_4_F]=38,[NT_4_FS]=36,[NT_4_G]=22,[NT_4_GS]=20,[NT_4_A]=6,[NT_4_AS]=4,[NT_4_B]=3,
-    [NT_5_C]=84,[NT_5_CS]=70,[NT_5_D]=68,[NT_5_DS]=54,[NT_5_E]=52,[NT_5_F]=38,[NT_5_FS]=36,[NT_5_G]=22,[NT_5_GS]=20,[NT_5_A]=6,[NT_5_AS]=4,[NT_5_B]=3,
-    [NT_6_C]=84,[NT_6_CS]=70,[NT_6_D]=68,[NT_6_DS]=54,[NT_6_E]=52,[NT_6_F]=38,[NT_6_FS]=36,[NT_6_G]=22,[NT_6_GS]=20,[NT_6_A]=6,[NT_6_AS]=4,[NT_6_B]=3,
-    [NT_7_C]=84,[NT_7_CS]=70,[NT_7_D]=68,[NT_7_DS]=54,[NT_7_E]=52,[NT_7_F]=38,[NT_7_FS]=36,[NT_7_G]=22,[NT_7_GS]=20,[NT_7_A]=6,[NT_7_AS]=4,[NT_7_B]=3,
-    [NT_8_C]=84,[NT_8_CS]=70,[NT_8_D]=68,[NT_8_DS]=54,[NT_8_E]=52,[NT_8_F]=38,[NT_8_FS]=36,[NT_8_G]=22,[NT_8_GS]=20,[NT_8_A]=6,[NT_8_AS]=4,[NT_8_B]=3,
+const ushort_t rom_notes_noise[NS_COUNT] = {
+    [NS_C]=84,[NS_CS]=70,[NS_D]=68,[NS_DS]=54,[NS_E]=52,[NS_F]=38,[NS_FS]=36,[NS_G]=22,[NS_GS]=20,[NS_A]=6,[NS_AS]=4,[NS_B]=3,
 };

@@ -5,11 +5,23 @@
 #pragma once
 #include <jmon/types.h>
 
+/** A note used to signal the start of an audio track. */
+#define AUDIO_START {false, NT_STOP, NT_STOP, NT_STOP, NS_STOP, 0}
+
 /** Constructs a note for an audio track. */
-#define AUDIO_NOTE(pulse, wave, noise, duration) {(pulse), (wave), (noise), (duration)}
+#define AUDIO_NOTE(nt_pulse1, nt_pulse2, nt_wave, ns_noise, tick_duration) {false, (nt_pulse1), (nt_pulse2), (nt_wave), (ns_noise), (tick_duration)}
 
 /** A note used to signal the end of an audio track. */
-#define AUDIO_END AUDIO_NOTE(NT_STOP, NT_STOP, NT_STOP, NT_STOP)
+#define AUDIO_END {true, NT_STOP, NT_STOP, NT_STOP, NS_STOP, 0}
+
+/** The GameBoy tick rate per second. */
+#define TICK_RATE 59.7275
+
+/** Converts a duration in beats per minute into a gameboy tick duration. */
+#define TICK_BPM(bpm) ((byte_t)((60 * TICK_RATE) / (bpm) + 0.5))
+
+/** Converts a duration in seconds into a gameboy tick duration. */
+#define TICK_SECONDS(seconds) ((byte_t)((TICK_RATE * (seconds)) + 0.5))
 
 /** Each audio channel type and the total number of audio channels. */
 typedef enum {
@@ -27,9 +39,18 @@ typedef enum {
 	VOLUME_HALF = 2,
 	VOLUME_FULL = 3,
 	VOLUME_COUNT,
-} audio_volume_t;
+} volume_t;
 
-/** Each octave and note that can be played on an audio channel. */
+/** Each available panning for audio channels. */
+typedef enum {
+	PANNING_NONE = 0,
+	PANNING_LEFT = 1,
+	PANNING_RIGHT = 2,
+	PANNING_BOTH = 3,
+	PANNING_COUNT,
+} panning_t;
+
+/** Each sound that can be played on the pulse or wave audio channels. */
 typedef enum {
 	//   C       C#       D       D#       E       F       F#       G       G#       A       A#       B
 	NT_2_C, NT_2_CS, NT_2_D, NT_2_DS, NT_2_E, NT_2_F, NT_2_FS, NT_2_G, NT_2_GS, NT_2_A, NT_2_AS, NT_2_B, // Octave 2
@@ -44,16 +65,31 @@ typedef enum {
 	NT_STOP = 255,
 } octave_t;
 
+/** Each sound that can be played on the noise audio channel. */
+typedef enum {
+	// C     C#     D     D#     E     F     F#     G     G#     A     A#     B
+	NS_C, NS_CS, NS_D, NS_DS, NS_E, NS_F, NS_FS, NS_G, NS_GS, NS_A, NS_AS, NS_B, // Noise
+	NS_COUNT,
+	NS_CONTINUE = NT_CONTINUE,
+	NS_STOP = NT_STOP,
+} noise_t;
+
 /** Data for when and what note is playing per audio channel in an audio track. */
 typedef struct {
-	/** The note to play for the pulse audio channel. */
-	octave_t pulse;
+	/** Is this the end of the song? */
+	bool_t end;
+
+	/** The note to play for the pulse one audio channel. */
+	octave_t pulse1;
+
+	/** The note to play for the pulse two audio channel. */
+	octave_t pulse2;
 
 	/** The note to play for the wave audio channel. */
 	octave_t wave;
 
 	/** The note to play for the noise audio channel. */
-	octave_t noise;
+	noise_t noise;
 
 	/** The duration to play the note for. */
 	byte_t duration;
@@ -74,7 +110,7 @@ typedef struct {
 	ushort_t index;
 
 	/** A pointer to the audio track being played. */
-	const audio_track_t* track;
+	const note_t* track;
 } audio_player_t;
 
 /** The state of Jokémon audio. */
@@ -82,14 +118,12 @@ typedef struct {
 	/**
 	 * The audio player for the current one-shot sound being played.
 	 * Audio channels shared by sounds and music will be used by sounds first.
-	 * This audio track internally uses CHANNEL_PULSE_ONE for pulse notes.
 	 */
 	audio_player_t sound;
 
 	/**
 	 * The audio player for the current looping music being played.
 	 * Audio channels shared by sounds and music will be used by sounds first.
-	 * This audio track internally uses CHANNEL_PULSE_TWO for pulse notes.
 	 */
 	audio_player_t music;
 } audio_t;
@@ -98,16 +132,16 @@ typedef struct {
 JMON_FUNC void jmon_update_audio(audio_t* audio) NONBANKED;
 
 /** Plays a one-shot sound effect from start. */
-JMON_FUNC void jmon_play_sound(audio_t* audio, const audio_track_t* sound) NONBANKED;
+JMON_FUNC void jmon_play_sound(audio_t* audio, const note_t* sound, byte_t delay) NONBANKED;
 
 /** Plays a looping music track from start. */
-JMON_FUNC void jmon_play_music(audio_t* audio, const audio_track_t* music) NONBANKED;
+JMON_FUNC void jmon_play_music(audio_t* audio, const note_t* music, byte_t delay) NONBANKED;
 
 /** Stops whatever sound effect is currently playing. */
-JMON_FUNC void jmon_stop_sound(audio_t* audio) NONBANKED;
+JMON_FUNC const note_t* jmon_stop_sound(audio_t* audio) NONBANKED;
 
 /** Stops whatever music track is currently playing. */
-JMON_FUNC void jmon_stop_music(audio_t* audio) NONBANKED;
+JMON_FUNC const note_t* jmon_stop_music(audio_t* audio) NONBANKED;
 
 /** Returns whether a sound effect is currently being played. */
 JMON_FUNC bool_t jmon_is_sound_playing(const audio_t* audio) NONBANKED;
@@ -134,19 +168,19 @@ JMON_FUNC bool_t jmon_is_sound_paused(const audio_t* audio) NONBANKED;
 JMON_FUNC bool_t jmon_is_music_paused(const audio_t* audio) NONBANKED;
 
 /** Returns a pointer to the current or last played sound effect's audio track. */
-JMON_FUNC const audio_track_t* jmon_get_sound(const audio_t* audio) NONBANKED;
+JMON_FUNC const note_t* jmon_get_sound(const audio_t* audio) NONBANKED;
 
 /** Returns a pointer to the current or last played music track's audio track. */
-JMON_FUNC const audio_track_t* jmon_get_music(const audio_t* audio) NONBANKED;
+JMON_FUNC const note_t* jmon_get_music(const audio_t* audio) NONBANKED;
 
 /** Returns the volume of an audio channel. */
-JMON_FUNC audio_volume_t jmon_get_channel_volume(audio_channel_t channel) NONBANKED;
+JMON_FUNC panning_t jmon_get_channel_panning(audio_channel_t channel) NONBANKED;
 
-/** Sets the volume of an audio channel. */
-JMON_FUNC void jmon_set_channel_volume(audio_channel_t channel, audio_volume_t volume) NONBANKED;
+/** Sets the panning of an audio channel. */
+JMON_FUNC void jmon_set_channel_panning(audio_channel_t channel, panning_t panning) NONBANKED;
 
 /** Returns the master volume. */
-JMON_FUNC audio_volume_t jmon_get_master_volume(void) NONBANKED;
+JMON_FUNC volume_t jmon_get_master_volume(panning_t panning) NONBANKED;
 
 /** Sets the master volume. */
-JMON_FUNC void jmon_set_master_volume(audio_volume_t volume) NONBANKED;
+JMON_FUNC void jmon_set_master_volume(panning_t panning, volume_t volume) NONBANKED;

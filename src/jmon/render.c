@@ -13,6 +13,9 @@ void jmon_init(void) NONBANKED {
 		set_default_palette();
 	}
 	DISPLAY_ON;
+	NR52_REG = 0x80;
+	NR50_REG = 0x77;
+	NR51_REG = 0xFF;
 }
 
 /** Advances to the next frame. */
