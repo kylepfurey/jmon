@@ -31,8 +31,9 @@ def freq_to_pulse_reg(freq_hz: float) -> int:
     x = 2048 - round(131072 / freq_hz)
     return max(0, min(2047, x))
 
-def freq_to_wave_reg(freq_hz: float) -> int:
-    x = 2048 - round(65536 / freq_hz)
+def freq_to_wave_reg(freq_hz: float, octave_shift_semitones: int = -12) -> int:
+    adjusted_freq = freq_hz * (2 ** (octave_shift_semitones / 12.0))
+    x = 2048 - round(65536 / adjusted_freq)
     return max(0, min(2047, x))
 
 def generate_table(octaves, reg_func):
