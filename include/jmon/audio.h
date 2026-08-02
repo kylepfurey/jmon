@@ -173,7 +173,7 @@ JMON_FUNC const note_t* jmon_get_sound(const audio_t* audio) NONBANKED;
 /** Returns a pointer to the current or last played music track's audio track. */
 JMON_FUNC const note_t* jmon_get_music(const audio_t* audio) NONBANKED;
 
-/** Returns the volume of an audio channel. */
+/** Returns the panning of an audio channel. */
 JMON_FUNC panning_t jmon_get_channel_panning(audio_channel_t channel) NONBANKED;
 
 /** Sets the panning of an audio channel. */
